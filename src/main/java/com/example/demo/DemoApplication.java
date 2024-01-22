@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static org.springframework.boot.SpringApplication.*;
@@ -23,6 +24,7 @@ public class DemoApplication {
     public static void main(String[] args) {
 
         ApplicationContext ctx = run(DemoApplication.class, args);
+        System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
         beanConfiguation(ctx);
 
     }
