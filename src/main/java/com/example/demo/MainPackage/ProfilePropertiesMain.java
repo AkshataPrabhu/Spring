@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.MainPackage;
 
-import com.example.demo.profileandproperties.Developmentimpl;
 import com.example.demo.profileandproperties.ProfileInterface;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

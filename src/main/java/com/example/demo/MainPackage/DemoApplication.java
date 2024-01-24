@@ -1,17 +1,16 @@
-package com.example.demo;
+package com.example.demo.MainPackage;
 
 import com.example.demo.autowire.MyService;
-import com.example.demo.beanClasses.JustConfigurationClass;
 import com.example.demo.beanClasses.MyConfigurationBean;
 import com.example.demo.beanClasses.NonBeanClass;
 import com.example.demo.cmdargs.MyCommandLineArgs;
 import com.example.demo.components.MyLazyComponent;
 import com.example.demo.components.MyPrototypeComponent;
 import com.example.demo.components.MySingletonComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -19,6 +18,7 @@ import java.util.logging.Logger;
 import static org.springframework.boot.SpringApplication.*;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.example.demo")
 public class DemoApplication {
 
     public static void main(String[] args) {
