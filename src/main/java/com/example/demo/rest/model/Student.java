@@ -1,5 +1,6 @@
 package com.example.demo.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -14,26 +15,12 @@ public class Student {
     private String name;
     private String age;
 
-    @OneToMany
-   @JoinColumn(name="student_id", referencedColumnName = "id")
+    //it is recommended to use a differnt dto, which doesnt contain course in the item/course instead of ignoring it completely,
+    //i.e create another class without item/course and return that object. if it is required to have item/course in the response in that case return the updated object from a differnt class
+    //https://github.com/codeforgeyt/one-to-many-web-service/blob/main/src/main/java/com/codeforgeyt/onetomanywebservice/model/dto/PlainCartDto.java
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age='" + age + '\'' +
-                ", courses=" + courses +
-                '}';
-    }
-
-    public Student(Long id, String name, String age, Set<Course> courses) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.courses = courses;
-    }
 
     public Student() {
     }
@@ -68,5 +55,15 @@ public class Student {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", courses=" + courses +
+                '}';
     }
 }

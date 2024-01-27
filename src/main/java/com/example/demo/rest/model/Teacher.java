@@ -1,5 +1,6 @@
 package com.example.demo.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -14,8 +15,9 @@ public class Teacher {
 
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="teacher_id",referencedColumnName = "id")
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher")
     private Set<Course> courses = new HashSet<>();
 
     public Teacher() {

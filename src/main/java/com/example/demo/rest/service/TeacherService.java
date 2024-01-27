@@ -22,10 +22,11 @@ public class TeacherService {
         return t;
     }
 
-//    public Set<Course> getCoursesTaughtby(Long id) {
-//        Set<Course> courses = repo.findByCourseName(id);
-//        return courses;
-//    }
+
+    public Set<Course> getCoursesTaughtby(Long id) {
+        Set<Course> courses = repo.findById(id).get().getCourses();
+        return courses;
+    }
 
     @Transactional
     public void addTeacher(Teacher teacher) {
@@ -60,4 +61,5 @@ public class TeacherService {
         repo.findAll().iterator().forEachRemaining(t->teachers.add(t));
         return teachers;
     }
+
 }

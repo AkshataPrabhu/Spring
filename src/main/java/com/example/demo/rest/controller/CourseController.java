@@ -1,14 +1,18 @@
 package com.example.demo.rest.controller;
 
 import com.example.demo.rest.model.Course;
+import com.example.demo.rest.model.Student;
+import com.example.demo.rest.model.Teacher;
 import com.example.demo.rest.service.CourseService;
+import com.example.demo.rest.service.StudentService;
+import com.example.demo.rest.service.TeacherService;
+import org.hibernate.sql.results.graph.collection.internal.SelectEagerCollectionAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/course")
@@ -17,6 +21,12 @@ public class CourseController {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    StudentService studentService;
+
+    @Autowired
+    TeacherService teacherService;
 
     @GetMapping(path = "/{courseId}")
     public ResponseEntity<Course> getCourseFor(@PathVariable Long courseId) {
@@ -70,6 +80,25 @@ public class CourseController {
 //        return ResponseEntity.ok().body(courseService.getCoursesByTeacher(teacherId));
 //    }
 
+    @PutMapping(path = "/{courseId}/teacher/{teacherId}",  produces = {"application/json"})
+    public ResponseEntity<Object> updateCourseTeacher(@PathVariable Long teacherId, @PathVariable Long courseId){
+        Teacher t = teacherService.getTeacherById(teacherId).get();
+        Course c = courseService.getCourse(courseId).get();
+        c.setTeacher(t);
+        courseService.addCourse(c);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(path = "/{courseId}/student/{studentId}", produces = {"application/json"})
+    public ResponseEntity<Object> addCourse(@PathVariable Long studentId, @PathVariable Long courseId) {
+        Student s = studentService.getStudent(studentId).get();
+        Course c = courseService.getCourse(courseId).get();
+        Set<Student> student = new HashSet<>();
+        student.add(s);
+        c.setStudents(student);
+        courseService.addCourse(c);
+        return ResponseEntity.ok().build();
+    }
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourse() {
         return ResponseEntity.ok().body(courseService.getAllCourses());

@@ -1,6 +1,7 @@
 package com.example.demo.rest.service;
 
 import com.example.demo.rest.model.Course;
+import com.example.demo.rest.model.Teacher;
 import com.example.demo.rest.repository.CourseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CourseService {
         Course updateCourse = course.get();
         updateCourse.setCourseDescription(c.getCourseDescription());
         updateCourse.setCourseName(c.getCourseName());
-      //  updateCourse.setTeacher(c.getTeacher());
+        updateCourse.setTeacher(c.getTeacher());
         repo.save(updateCourse);
         return Optional.of(updateCourse);
     }
@@ -42,9 +43,9 @@ public class CourseService {
     public Optional<Course> getCourse(Long id){
         return repo.findById(id);
     }
-//    public List<Course> getCoursesByTeacher(Long id){
-//        return repo.findByTeacherId(id);
-//    }
+    public List<Course> getCoursesByTeacher(Long id){
+        return repo.findByTeacherId(id);
+    }
 
     public List<Course> getAllCourses(){
         return (List<Course>) repo.findAll();
@@ -53,4 +54,5 @@ public class CourseService {
     public Optional<Course> getCourseByName(String name) {
         return repo.findByCourseName(name);
     }
+
 }

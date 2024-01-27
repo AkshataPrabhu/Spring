@@ -2,12 +2,15 @@ package com.example.demo.rest.controller;
 
 import com.example.demo.rest.model.Course;
 import com.example.demo.rest.model.Student;
+import com.example.demo.rest.model.Teacher;
+import com.example.demo.rest.service.CourseService;
 import com.example.demo.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,6 +21,8 @@ import java.util.Set;
 public class StudentController {
     @Autowired
     StudentService service;
+    @Autowired
+    CourseService courseService;
 
     @GetMapping(path = "/{studentId}")
     public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
@@ -47,6 +52,9 @@ public class StudentController {
         service.updateStudent(student, studentId);
         return ResponseEntity.ok().build();
     }
+
+
+
 
     @GetMapping(path = "/{studentId}/course", produces = {"application/json"})
     public ResponseEntity<Set<Course>> getCoursesOfStudent(@PathVariable Long studentId) {

@@ -2,6 +2,9 @@ package com.example.demo.rest.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Course {
 
@@ -11,10 +14,27 @@ public class Course {
     private String courseName;
     private String courseDescription;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private Teacher teacher;
+
+    @ManyToMany
+    @JoinTable(name = "enrolled_students",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students = new HashSet<>();
+
     public Course() {
     }
 
-// private Teacher teacher;
+    public Course(Long id, String courseName, String courseDescription, Teacher teacher, Set<Student> students) {
+        this.id = id;
+        this.courseName = courseName;
+        this.courseDescription = courseDescription;
+        this.teacher = teacher;
+        this.students = students;
+    }
 
     public Long getId() {
         return id;
@@ -40,13 +60,21 @@ public class Course {
         this.courseDescription = courseDescription;
     }
 
-//    public Teacher getTeacher() {
-//        return teacher;
-//    }
-//
-//    public void setTeacher(Teacher teacher) {
-//        this.teacher = teacher;
-//    }
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
 
     @Override
     public String toString() {
@@ -54,7 +82,8 @@ public class Course {
                 "id=" + id +
                 ", courseName='" + courseName + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
-             //   ", teacher=" + teacher +
+                ", teacher=" + teacher +
+                ", students=" + students +
                 '}';
     }
 }

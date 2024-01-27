@@ -41,10 +41,6 @@ public class StudentService {
        return (List<Student>) repo.findAll();
     }
 
-//    public List<Student> getStudentForCourse(Long id){
-//        return repo.findByCourseId(id);
-//    }
-
 
     public Optional<Student> getStudent(Long studentId) {
         return repo.findById(studentId);
